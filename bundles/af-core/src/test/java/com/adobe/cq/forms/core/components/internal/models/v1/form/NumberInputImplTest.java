@@ -29,11 +29,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.ConstraintType;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.Label;
-import com.adobe.cq.forms.core.components.models.form.NumberInput;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -328,5 +324,12 @@ public class NumberInputImplTest {
         assert (dataObject.getTitle()).equals("Phone Number");
         assert (dataObject.getFieldType()).equals("number-input");
         assert (dataObject.getDescription()).equals("Enter your phone number.");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DATALAYER, NumberInput.class, context);
+        FieldUtils.writeField(numberInput, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DATALAYER));
     }
 }

@@ -29,13 +29,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
-import com.adobe.cq.forms.core.components.models.form.CheckBox;
-import com.adobe.cq.forms.core.components.models.form.CheckBoxGroup;
-import com.adobe.cq.forms.core.components.models.form.ConstraintType;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -333,5 +327,12 @@ public class CheckBoxGroupImplTest {
         assert (dataObject.getTitle()).equals("Personality");
         assert (dataObject.getFieldType()).equals("checkbox-group");
         assert (dataObject.getDescription()).equals("Select all that apply");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        CheckBox checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBox.class, context);
+        FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(checkBox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_GROUP_DATALAYER));
     }
 }

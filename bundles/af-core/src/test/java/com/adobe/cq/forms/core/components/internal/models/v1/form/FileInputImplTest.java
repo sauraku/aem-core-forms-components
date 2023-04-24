@@ -30,12 +30,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
-import com.adobe.cq.forms.core.components.models.form.ConstraintType;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.FileInput;
-import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -385,5 +380,12 @@ public class FileInputImplTest {
         assert (dataObject.getTitle()).equals("CV");
         assert (dataObject.getFieldType()).equals("file-input");
         assert (dataObject.getDescription()).equals("Upload your CV");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_DATALAYER, FileInput.class, context);
+        FieldUtils.writeField(fileInput, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_FILEINPUT_DATALAYER));
     }
 }
